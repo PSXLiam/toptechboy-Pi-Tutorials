@@ -7,7 +7,7 @@ try:
     while True:
         result = myDHT.read()
         if result.is_valid():
-            print('Temperature is: ' ,result.tempearature, 'Humiduty is: ',result.humidity)
+            print('Temperature is: ' ,result.temperature, 'Humidity is: ',result.humidity)
         sleep(.2)
 except KeyboardInterrupt:
     GPIO.cleanup()
