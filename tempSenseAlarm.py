@@ -29,21 +29,41 @@ try:
         buttonState = GPIO.input(buttonPin)
         if buttonState == 1 and buttonStateOld == 0:
             setMode = not setMode
-        #print(setmode)
+        #print(setMode) #Test that setMode is correct
         buttonStateOld = buttonState
         sleep(.2)
         if setMode == True: #Programming Mode
             analogVal = ADC0834.getResult()
             buzzVal = int(analogVal*(100/255))
+            LCD1602.clear()
             LCD1602.write(0,0, 'Set Trip Temp:')
             LCD1602.write(0,1, str(buzzVal))
-            sleep(0.25)
-            LCD1602.clear()
+            sleep(0.5)
             GPIO.output(buzzPin, GPIO.HIGH)                
         if setMode == False: #Monitoring mode
-            pass
-            
+            result = myDHT.read()
+            if result.is_valid():
+                tempC = result.temperature
+                hum = result.humidity
+                #print(buzzVal) #Test that buzzVal is correct
+                LCD1602.clear()
+                if tempC < buzzVal:
+                    GPIO.output(buzzPin, GPIO.HIGH) #Make sure buzzer is off
+                    LCD1602.write(0,0, 'Temp: ')
+                    LCD1602.write(6,0, str(tempC))
+                    LCD1602.write(11,0, 'C')
+                    LCD1602.write(0,1, 'Humidity: ')
+                    LCD1602.write(10,1, str(hum))
+                    LCD1602.write(14,1, ' %')
+                else:
+                    GPIO.output(buzzPin, GPIO.LOW) #Make sure buzzer is on
+                    LCD1602.write(0,0, 'Temp: ')
+                    LCD1602.write(6,0, str(tempC))
+                    LCD1602.write(11,0, 'C')
+                    LCD1602.write(0,1, 'ALERT HIGH TEMP!')
+        sleep(.1)                
 except KeyboardInterrupt:
     sleep(.2)
     GPIO.cleanup()
-    print('GPIO Clean!')
+    LCD1602.clear()
+    print('System Clean!')
