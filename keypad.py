@@ -23,7 +23,8 @@ try:
         GPIO.output(rows[myRow], GPIO.HIGH)
         butVal = GPIO.input(columns[myColumn])
         GPIO.output(rows[myRow], GPIO.LOW)
-        print(butVal)
+        if butVal == 1:
+            print(keypad[myRow][myColumn])
         sleep(.2)
 except KeyboardInterrupt:
     sleep(.1)
