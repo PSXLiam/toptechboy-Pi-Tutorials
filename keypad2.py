@@ -29,9 +29,10 @@ try:
                 butVal = GPIO.input(columns[myColumn])
                 GPIO.output(rows[myRow], GPIO.LOW)
                 if butVal == 1:
+                    keyVal = keypad[myRow][myColumn]
                     press = 1
                 if butVal == 1 and press == 1 and pressOld == 0:
-                    print(keypad[myRow][myColumn])      
+                    print(keyVal)      
         pressOld = press
         sleep(.2)
 except KeyboardInterrupt:
