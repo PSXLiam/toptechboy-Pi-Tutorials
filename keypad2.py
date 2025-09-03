@@ -3,10 +3,13 @@ import RPi.GPIO as GPIO
 from time import sleep
 GPIO.setmode(GPIO.BOARD)
 
-#Setup
+#Variables
 rows = [11,13,15,29]
 columns = [31,33,35,37]
 keypad = [[1,2,3,'A'],[4,5,6,'B'],[7,8,9,'C'],['+',0,'#','D']]
+butValOld = 0
+
+#Setup
 GPIO.setup(rows[0], GPIO.OUT)
 GPIO.setup(rows[1], GPIO.OUT)
 GPIO.setup(rows[2], GPIO.OUT)
@@ -23,8 +26,9 @@ try:
         GPIO.output(rows[myRow], GPIO.HIGH)
         butVal = GPIO.input(columns[myColumn])
         GPIO.output(rows[myRow], GPIO.LOW)
-        if butVal == 1:
+        if butVal == 1 and butValOld == 0:
             print(keypad[myRow][myColumn])
+        butValOld = butVal
         sleep(.2)
 except KeyboardInterrupt:
     sleep(.1)
