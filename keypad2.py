@@ -20,15 +20,15 @@ GPIO.setup(columns[2], GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 GPIO.setup(columns[3], GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 try:
-    myRow = int(input('Which Row to Read: '))
-    myColumn = int(input('Which Column to Read: '))
     while True:
-        GPIO.output(rows[myRow], GPIO.HIGH)
-        butVal = GPIO.input(columns[myColumn])
-        GPIO.output(rows[myRow], GPIO.LOW)
-        if butVal == 1 and butValOld == 0:
-            print(keypad[myRow][myColumn])
-        butValOld = butVal
+        for myRow in [0,1,2,3]:
+            for myColumn in [0,1,2,3]:
+                GPIO.output(rows[myRow], GPIO.HIGH)
+                butVal = GPIO.input(columns[myColumn])
+                GPIO.output(rows[myRow], GPIO.LOW)
+                if butVal == 1 and butValOld == 0:
+                    print(keypad[myRow][myColumn])
+                butValOld = butVal
         sleep(.2)
 except KeyboardInterrupt:
     sleep(.1)
