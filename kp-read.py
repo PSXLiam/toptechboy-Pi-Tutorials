@@ -35,7 +35,7 @@ class keypad:
             sleep(.25)
 
 import RPi.GPIO as GPIO
-myPad = keypad()
+myPad = keypad(retChar = 'A')
 myString = myPad.readKeypad()
 print(myString)
 GPIO.cleanup()
