@@ -16,6 +16,6 @@ try:
         LCD1602.clear()
 except KeyboardInterrupt:
     sleep(.2)
-    LCD.clear()
+    LCD1602.clear()
     GPIO.cleanup()
     print('GPIO Clean!')
