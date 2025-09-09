@@ -19,17 +19,17 @@ readThread.daemon = True
 readThread.start()
 
 while True:
-        CMD = myString
-        if CMD == 'A' + password:
-            LCD1602.write(0,0, '   --ARMED--   ')
-        if CMD == 'B' + password:
-            LCD1602.write(0,0, '  --DISARMED--   ')
-        if CMD == 'C' + password:
-            LCD1602.write(0,0, 'Password?       ')
-            while myString == 'C' + password:
-                pass
-            password = myString
-            LCD1602.write(0,0, password + '      ')
-            sleep(2)
-            LCD1602.clear()
+    CMD = myString
+    if CMD == 'A' + password:
+        LCD1602.write(0,0, '   --ARMED--   ')
+    if CMD == 'B' + password:
+        LCD1602.write(0,0, '  --DISARMED--   ')
+    if CMD == 'C' + password:
+        LCD1602.write(0,0, 'Password?       ')
+        while myString == 'C' + password:
+            pass
+        password = myString
+        LCD1602.write(0,0, password + '      ')
+        sleep(2)
+        LCD1602.clear()
         
