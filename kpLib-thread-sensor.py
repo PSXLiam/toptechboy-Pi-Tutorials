@@ -22,7 +22,7 @@ password = '1234'
 
 def readKp():
     global myString
-    while True:
+    while myString != '*':
         myString = myKeypad.readKeypad()
         sleep(.2)
 
@@ -30,7 +30,7 @@ readThread = threading.Thread(target = readKp,)
 readThread.daemon = True
 readThread.start()
 
-while True:
+while myString != '*':
     CMD = myString
     if CMD == 'A' + password:
         LCD1602.write(0,0, '   --ARMED--   ')
@@ -44,4 +44,7 @@ while True:
         LCD1602.write(0,0, password + '      ')
         sleep(2)
         LCD1602.clear()
-        
+sleep(1)
+GPIO.cleanup()
+LCD1602.clear()
+print('System Clean!')
