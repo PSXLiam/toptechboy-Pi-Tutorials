@@ -34,10 +34,17 @@ while myString != '*':
     CMD = myString
     if CMD == 'A' + password:
         LCD1602.write(0,0, '   --ARMED--   ')
+        moveVal = GPIO.input(PIRpin)
+        if moveVal == 1:
+            LCD1602.write(0,1, '  !!INTRUDER!! ')
+        else:
+            LCD1602.write(0,1, ' --All Clear-- ')
     if CMD == 'B' + password:
         LCD1602.write(0,0, '  --DISARMED--   ')
+        LCD1602.write(0,1, '               ')
     if CMD == 'C' + password:
         LCD1602.write(0,0, 'Password?       ')
+        LCD1602.write(0,1, '               ')
         while myString == 'C' + password:
             pass
         password = myString
