@@ -1,12 +1,24 @@
 #Imports
+import RPi.GPIO as GPIO
 import LCD1602
+import threading
 from kpLib import keypad
 from time import sleep
-import threading
+
 myKeypad = keypad(retChar = 'D')
 LCD1602.init(0x27, 1)
+
+#Pins
+PIRpin = 12
+
+#Setup
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(PIRpin, GPIO.IN)
+
+#Variables
 myString = ''
 password = '1234'
+
 
 def readKp():
     global myString
