@@ -56,9 +56,22 @@ while myString != '*':
         LCD1602.write(0,0, password + '      ')
         sleep(2)
         LCD1602.clear()
+        
+    if CMD == 'CA1' + password:
+        myString = 'A' + password
+        mixer.music.load('Sounds/alarm1.wav')
     if CMD == 'CA2' + password:
         myString = 'A' + password
         mixer.music.load('Sounds/alarm2.wav')
+    if CMD == 'CA3' + password:
+        myString = 'A' + password
+        mixer.music.load('Sounds/alarm3.wav')
+    if CMD == 'CA4' + password:
+        myString = 'A' + password
+        mixer.music.load('Sounds/alarm4.wav')
+    if CMD == 'CA5' + password:
+        myString = 'A' + password
+        mixer.music.load('Sounds/alarm5.wav')
         
 sleep(1)
 GPIO.cleanup()
