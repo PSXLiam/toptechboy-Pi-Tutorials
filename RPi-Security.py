@@ -16,7 +16,7 @@ PIRpin = 12
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(PIRpin, GPIO.IN)
 mixer.init()
-mixer.music.load('Sounds/alarm.wav')
+mixer.music.load('Sounds/alarm1.wav')
 
 #Variables
 myString = ''
@@ -56,6 +56,10 @@ while myString != '*':
         LCD1602.write(0,0, password + '      ')
         sleep(2)
         LCD1602.clear()
+    if CMD == 'CA2' + password:
+        myString = 'A' + password
+        mixer.music.load('Sounds/alarm2.wav')
+        
 sleep(1)
 GPIO.cleanup()
 LCD1602.clear()
