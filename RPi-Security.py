@@ -4,6 +4,7 @@ import LCD1602
 import threading
 from kpLib import keypad
 from time import sleep
+from pygame import mixer
 
 myKeypad = keypad(retChar = 'D')
 LCD1602.init(0x27, 1)
@@ -14,6 +15,8 @@ PIRpin = 12
 #Setup
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(PIRpin, GPIO.IN)
+mixer.init()
+mixer.music.load('Sounds/alarm.wav')
 
 #Variables
 myString = ''
@@ -37,6 +40,8 @@ while myString != '*':
         moveVal = GPIO.input(PIRpin)
         if moveVal == 1:
             LCD1602.write(0,1, '  !!INTRUDER!! ')
+            mixer.music.play()
+            sleep(4)
         else:
             LCD1602.write(0,1, ' --All Clear-- ')
     if CMD == 'B' + password:
