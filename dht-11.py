@@ -19,19 +19,23 @@ while True:
     cmd, address = RPIsocket.recvfrom(bufferSize)
     cmd = cmd.decode('utf-8')
     print(cmd)
-    print('Client Address: ', address[0])
-    if cmd == 'GO':
+    if cmd == 'TEMP':
         result = myDHT.read()
-        if result.is_valid():
-            data = str(result.temperature) + ':' + str(result.humidity)
-            data = data.encode('utf-8')
-            RPIsocket.sendto(data, address)
-        else:
-            data = 'Bad Measurement'
-            print(data)
-            data = data.encode('utf-8')
-            RPIsocket.sendto(data, address)
-    else:
-        data = 'Invalid Request'
+        while result.is_valid() == False:
+            print('Bad Read... Try Again')
+            result = myDHT.read()
+        data = cmd + ':' + str(result.temperature)
+        data = data.encode('utf-8')
+        RPIsocket.sendto(data, address)
+    if cmd == 'HUM':
+        result = myDHT.read()
+        while result.is_valid() == False:
+            print('Bad Read... Try Again')
+            result = myDHT.read()
+        data = cmd + ':' + str(result.humidity)
+        data = data.encode('utf-8')
+        RPIsocket.sendto(data, address)
+    if cmd != 'TEMP' and cmd != 'HUM':
+        data = cmd + ':' + 'null'
         data = data.encode('utf-8')
         RPIsocket.sendto(data, address)
