@@ -15,11 +15,12 @@ fps = 0
 while True:
     tStart = time.time()
     frame = piCam.capture_array()
+    cv2.putText(frame, str(int(fps)), (30, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,0,255), 3)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
         break
     tEnd = time.time()
     loopTime = tEnd - tStart
     fps = .9*fps + .1*(1/loopTime)
-    print(int(fps))
+    #print(int(fps))
 cv2.destroyAllWindows()
