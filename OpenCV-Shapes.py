@@ -13,6 +13,12 @@ height = 1.0
 myColor = (0, 0, 255)
 weight = 3
 
+#Rectangle Variables
+upperLeft = (540, 150)
+lowerRight = (640, 225)
+rColor = (255, 255, 255)
+thickness = 5
+
 #Camera Setup
 piCam = Picamera2()
 piCam.preview_configuration.main.size = (dispW, dispH)
@@ -26,6 +32,7 @@ while True:
     tStart = time.time()
     frame = piCam.capture_array()
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
+    cv2.rectangle(frame, upperLeft, lowerRight, rColor, thickness)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
         break
