@@ -20,8 +20,6 @@ tlC = 50			#top left Column
 tlR = 75			#top left Row
 lrC = tlC + boxW	#lower right Column
 lrR = tlR + boxH	#lower right Row
-upperLeft = (tlC, tlR)
-lowerRight = (lrC, lrR)
 deltaC = 2
 deltaR = 2
 thickness = -1
@@ -39,8 +37,18 @@ piCam.start()
 while True:
     tStart = time.time()
     frame = piCam.capture_array()
+    #Check if at edges
+    if tlC + deltaC < 0 or lrC + deltaC > dispW-1:
+        deltaC = deltaC*(-1)
+    if tlR + deltaR < 0 or lrR + deltaR > dispH-1:
+        deltaR = deltaR*(-1)
+    #Move the Box
+    tlC = tlC + deltaC
+    tlR = tlR + deltaR
+    lrC = lrC + deltaC
+    lrR = lrR + deltaR
+    cv2.rectangle(frame, (tlC, tlR), (lrC, lrR), rColor, thickness)
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
-    cv2.rectangle(frame, upperLeft, lowerRight, rColor, thickness)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
         break
