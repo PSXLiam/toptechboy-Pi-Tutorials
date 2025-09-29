@@ -13,17 +13,19 @@ height = 1.0
 myColor = (0, 0, 255)
 weight = 3
 
-#Rectangle Variables
-upperLeft = (540, 150)
-lowerRight = (640, 225)
-rColor = (255, 255, 255)
-thickness = 5
-
-#Circle Variables
-center = (320, 180)
-radius = 35
-cColor = (0, 255, 255)
-cThickness = 5
+#Box Variables
+boxW = 250
+boxH = 125
+tlC = 50			#top left Column
+tlR = 75			#top left Row
+lrC = tlC + boxW	#lower right Column
+lrR = tlR + boxH	#lower right Row
+upperLeft = (tlC, tlR)
+lowerRight = (lrC, lrR)
+deltaC = 2
+deltaR = 2
+thickness = -1
+rColor = (255, 0, 0)
 
 #Camera Setup
 piCam = Picamera2()
@@ -39,7 +41,6 @@ while True:
     frame = piCam.capture_array()
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.rectangle(frame, upperLeft, lowerRight, rColor, thickness)
-    cv2.circle(frame, center, radius, cColor, cThickness)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
         break
