@@ -26,6 +26,7 @@ while True:
     tStart = time.time()
     frame = piCam.capture_array()
     RoI = frame [:int(dispH/2), :int(dispW/2)]
+    frame [int(dispH/2):, int(dispW/2):] = RoI
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     cv2.imshow("Region of Interest", RoI)
