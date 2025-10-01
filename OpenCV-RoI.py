@@ -25,6 +25,7 @@ piCam.start()
 while True:
     tStart = time.time()
     frame = piCam.capture_array()
+    frame[0:199,0:199] = [0,255,0]
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
