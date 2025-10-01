@@ -25,10 +25,10 @@ piCam.start()
 while True:
     tStart = time.time()
     frame = piCam.capture_array()
-    frame[:int(dispH/2),int(dispW/2):] = [0,255,0]
-    frame[:int(dispH/2),:int(dispW/2)] = [255,0,0]
+    RoI = frame [:int(dispH/2), :int(dispW/2)]
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
+    cv2.imshow("Region of Interest", RoI)
     if cv2.waitKey(1) == ord('q'):
         break
     tEnd = time.time()
