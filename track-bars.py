@@ -3,6 +3,26 @@ import cv2
 from picamera2 import Picamera2
 import time
 
+def TrackX(val):
+    global xPos
+    xPos = val
+    print("X Position:", xPos)
+    
+def TrackY(val):
+    global yPos
+    yPos = val
+    print("Y Position:", yPos)
+    
+def TrackW(val):
+    global boxW
+    boxW = val
+    print("Box Width:", boxW)
+    
+def TrackH(val):
+    global boxH
+    boxH = val
+    print("Box Height:", boxH)
+
 #Variables
 dispW = 640
 dispH = 360
@@ -21,6 +41,13 @@ piCam.preview_configuration.controls.FrameRate = 30
 piCam.preview_configuration.align()
 piCam.configure("preview")
 piCam.start()
+
+#Trackbars
+cv2.namedWindow("My Trackbars")
+cv2.createTrackbar("X Pos", "My Trackbars", 10, dispW-1, TrackX)
+cv2.createTrackbar("Y Pos", "My Trackbars", 10, dispH-1, TrackY)
+cv2.createTrackbar("Box Width", "My Trackbars", 10, dispW-1, TrackW)
+cv2.createTrackbar("Box Height", "My Trackbars", 10, dispH-1, TrackH)
 
 while True:
     tStart = time.time()
