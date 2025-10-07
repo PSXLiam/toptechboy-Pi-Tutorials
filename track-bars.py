@@ -53,9 +53,11 @@ cv2.createTrackbar("Box Height", "My Trackbars", 10, dispH-1, TrackH)
 while True:
     tStart = time.time()
     frame = piCam.capture_array()
+    ROI = frame[yPos:yPos+boxH, xPos:xPos+boxW]
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.rectangle(frame,(xPos, yPos), (xPos+boxW, yPos+boxH), myColor, 2)
     cv2.imshow("piCam", frame)
+    cv2.imshow("ROI", ROI)
     if cv2.waitKey(1) == ord('q'):
         break
     tEnd = time.time()
