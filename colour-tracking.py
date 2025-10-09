@@ -83,6 +83,10 @@ while True:
     objectOfInterestSmall = cv2.resize(objectOfInterest, (int(dispW/2),int(dispH/2)))
     #print(frameHSV [int(dispH/2), int(dispW/2)])
     
+    contours, junk = cv2.findContours(myMask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if len(contours)>0:
+        cv2.drawContours(frame, contours, -1, (255,0,0),3)
+    
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     cv2.imshow("My Mask", myMaskSmall)
