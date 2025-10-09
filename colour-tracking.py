@@ -84,9 +84,12 @@ while True:
     #print(frameHSV [int(dispH/2), int(dispW/2)])
     
     contours, junk = cv2.findContours(myMask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    if len(contours)>0:
+    if len(contours) > 0:
         contours = sorted(contours, key = lambda x:cv2.contourArea(x), reverse = True)
         cv2.drawContours(frame, contours, 0, (255,0,0),3)
+        contour = contours[0]
+        boxX, boxY, boxW, boxH = cv2.boundingRect(contour)
+        cv2.rectangle(frame, (boxX, boxY), (boxX+boxW, boxY+boxH), (0, 0, 255), 3)
     
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
