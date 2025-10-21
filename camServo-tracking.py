@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from picamera2 import Picamera2
 import time
+from camServo import Servo
 
 #TrackBar Functions
 def onTrack1(val):
@@ -70,6 +71,11 @@ cv2.createTrackbar("Saturation High", "My Tracker", 255, 255, onTrack4)
 cv2.createTrackbar("Value Low", "My Tracker", 50, 255, onTrack5)
 cv2.createTrackbar("Value High", "My Tracker", 255, 255, onTrack6)
 
+#Servo Setup
+pan = Servo()
+panAngle = 0
+pan.set_angle(panAngle)
+
 while True:
     tStart = time.time()
     frame = piCam.capture_array()
@@ -90,13 +96,21 @@ while True:
         contour = contours[0]
         boxX, boxY, boxW, boxH = cv2.boundingRect(contour)
         cv2.rectangle(frame, (boxX, boxY), (boxX+boxW, boxY+boxH), (0, 0, 255), 3)
-    
+        error = (boxX + boxW/2) - (dispW/2)
+        if error > 0:
+            panAngle = panAngle + 1
+            pan.set_angle(panAngle)
+        if error < 0:
+            panAngle = panAngle - 1
+            pan.set_angle(panAngle)
+               
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     cv2.imshow("My Mask", myMaskSmall)
     cv2.imshow("Object of Interest", objectOfInterestSmall)
     
     if cv2.waitKey(1) == ord('q'):
+        pan.GPIO_Clean()
         break
     tEnd = time.time()
     loopTime = tEnd - tStart
