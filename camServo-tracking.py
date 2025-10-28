@@ -35,6 +35,11 @@ def onTrack6(val):
     global valHigh
     valHigh = val
     print("Value High:", valHigh)
+    
+def onTrack7(val):
+    global track
+    track = val
+    print("Track Value :", track)
 
 #Variables
 dispW = 640
@@ -45,6 +50,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 height = 1.0
 myColor = (0, 0, 255)
 weight = 3
+track = 0
 
 hueLow = 1
 hueHigh = 25
@@ -70,6 +76,7 @@ cv2.createTrackbar("Saturation Low", "My Tracker", 80, 255, onTrack3)
 cv2.createTrackbar("Saturation High", "My Tracker", 255, 255, onTrack4)
 cv2.createTrackbar("Value Low", "My Tracker", 30, 255, onTrack5)
 cv2.createTrackbar("Value High", "My Tracker", 255, 255, onTrack6)
+cv2.createTrackbar("Train-0 Track-1", "My Tracker", 0, 1, onTrack7)
 
 #Servo Setup
 pan = Servo()
@@ -96,14 +103,15 @@ while True:
         contour = contours[0]
         boxX, boxY, boxW, boxH = cv2.boundingRect(contour)
         cv2.rectangle(frame, (boxX, boxY), (boxX+boxW, boxY+boxH), (0, 0, 255), 3)
-        error = (boxX + boxW/2) - (dispW/2)
-        if error > 0:
-            panAngle = panAngle + 1
-            pan.set_angle(panAngle)
-        if error < 0:
-            panAngle = panAngle - 1
-            pan.set_angle(panAngle)
-               
+        if track == 1:
+            error = (boxX + boxW/2) - (dispW/2)
+            if error > 0:
+                panAngle = panAngle + 1
+                pan.set_angle(panAngle)
+            if error < 0:
+                panAngle = panAngle - 1
+                pan.set_angle(panAngle)
+                   
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     cv2.imshow("My Mask", myMaskSmall)
