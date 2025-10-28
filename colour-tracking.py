@@ -64,10 +64,10 @@ piCam.start()
 #Trackbars
 cv2.namedWindow("My Tracker")
 cv2.createTrackbar("Hue Low", "My Tracker", 1, 179, onTrack1)
-cv2.createTrackbar("Hue High", "My Tracker", 25, 179, onTrack2)
+cv2.createTrackbar("Hue High", "My Tracker", 60, 179, onTrack2)
 cv2.createTrackbar("Saturation Low", "My Tracker", 80, 255, onTrack3)
 cv2.createTrackbar("Saturation High", "My Tracker", 255, 255, onTrack4)
-cv2.createTrackbar("Value Low", "My Tracker", 50, 255, onTrack5)
+cv2.createTrackbar("Value Low", "My Tracker", 30, 255, onTrack5)
 cv2.createTrackbar("Value High", "My Tracker", 255, 255, onTrack6)
 
 while True:
