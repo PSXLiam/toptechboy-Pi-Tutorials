@@ -104,6 +104,10 @@ while True:
         boxX, boxY, boxW, boxH = cv2.boundingRect(contour)
         cv2.rectangle(frame, (boxX, boxY), (boxX+boxW, boxY+boxH), (0, 0, 255), 3)
         pan.pwm_off()
+        if track == 0 and panAngle != 0:
+            pan.pwm_on()
+            panAngle = 0
+            pan.set_angle(panAngle)
         if track == 1:
             pan.pwm_on()
             error = (boxX + boxW/2) - (dispW/2)
