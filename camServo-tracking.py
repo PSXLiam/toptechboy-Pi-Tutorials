@@ -105,12 +105,12 @@ while True:
         cv2.rectangle(frame, (boxX, boxY), (boxX+boxW, boxY+boxH), (0, 0, 255), 3)
         if track == 1:
             error = (boxX + boxW/2) - (dispW/2)
-            if error > 0:
-                panAngle = panAngle + 1
-                pan.set_angle(panAngle)
-            if error < 0:
-                panAngle = panAngle - 1
-                pan.set_angle(panAngle)
+            panAngle = panAngle + error/70
+            if panAngle > 90:
+                panAngle = 90
+            if panAngle < -90:
+                panAngle = -90
+            pan.set_angle(panAngle)
                    
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
