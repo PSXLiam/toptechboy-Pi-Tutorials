@@ -103,14 +103,18 @@ while True:
         contour = contours[0]
         boxX, boxY, boxW, boxH = cv2.boundingRect(contour)
         cv2.rectangle(frame, (boxX, boxY), (boxX+boxW, boxY+boxH), (0, 0, 255), 3)
+        pan.pwm_off()
         if track == 1:
+            pan.pwm_on()
             error = (boxX + boxW/2) - (dispW/2)
             panAngle = panAngle + error/70
             if panAngle > 90:
                 panAngle = 90
             if panAngle < -90:
                 panAngle = -90
-            pan.set_angle(panAngle)
+            if abs(error) > 35:
+                pan.set_angle(panAngle)
+                pan.pwm_off()
                    
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)

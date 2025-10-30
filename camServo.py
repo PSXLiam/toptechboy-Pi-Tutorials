@@ -12,6 +12,12 @@ class Servo():
         self.angle = 0
         self.min_angle = min_angle
         self.max_angle = max_angle
+        
+    def pwm_on(self):
+        self.pwm.start(0)
+        
+    def pwm_off(self):
+        self.pwm.stop()
 
     def set_angle(self, pwmAngle):
         self.angle =  pwmAngle
