@@ -22,9 +22,18 @@ piCam.preview_configuration.align()
 piCam.configure("preview")
 piCam.start()
 
+#Face Model
+faceCascade = cv2.CascadeClassifier('./haar/haarcascade_frontalface_default.xml')
+
 while True:
     tStart = time.time()
     frame = piCam.capture_array()
+    frameGray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = faceCascade.detectMultiScale(frameGray, 1.3, 5)
+    #print(faces)
+    for face in faces:
+        x, y, w, h = face
+        cv2.rectangle(frame, (x,y),(x+w, y+h), (255,0,0), 3)
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
