@@ -34,10 +34,12 @@ while True:
     for face in faces:
         x, y, w, h = face
         cv2.rectangle(frame, (x,y),(x+w, y+h), (255,0,0), 3)
-    eyes = eyeCascade.detectMultiScale(frameGray, 1.3, 5)
-    for eye in eyes:
-        x, y, w, h = eye
-        cv2.rectangle(frame, (x,y),(x+w, y+h), (0,255,0), 3)
+        roiColor = frame[y:y+h, x:x+w]
+        roiGray = frameGray[y:y+h, x:x+w]
+        eyes = eyeCascade.detectMultiScale(roiGray, 1.3, 5)
+        for eye in eyes:
+            x, y, w, h = eye
+            cv2.rectangle(roiColor, (x,y),(x+w, y+h), (0,255,0), 3)
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
