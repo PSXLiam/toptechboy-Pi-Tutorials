@@ -25,7 +25,7 @@ piCam.start()
 
 #Face Models
 faceCascade = cv2.CascadeClassifier('./haar/haarcascade_frontalface_default.xml')
-eyeCascade = cv2.CascadeClassifier('./haar/haarcascade_eye.xml')
+#eyeCascade = cv2.CascadeClassifier('./haar/haarcascade_eye.xml')
 
 #Servo Setup
 pan = Servo()
@@ -51,12 +51,12 @@ while True:
         if abs(error) > 35:
             pan.set_angle(panAngle)
             pan.pwm_off()
-        roiColor = frame[y:y+h, x:x+w]
-        roiGray = frameGray[y:y+h, x:x+w]
-        eyes = eyeCascade.detectMultiScale(roiGray, 1.3, 5)
-        for eye in eyes:
-            x, y, w, h = eye
-            cv2.rectangle(roiColor, (x,y),(x+w, y+h), (0,255,0), 3)
+#         roiColor = frame[y:y+h, x:x+w]
+#         roiGray = frameGray[y:y+h, x:x+w]q
+#         eyes = eyeCascade.detectMultiScale(roiGray, 1.3, 5)
+#         for eye in eyes:
+#             x, y, w, h = eye
+#             cv2.rectangle(roiColor, (x,y),(x+w, y+h), (0,255,0), 3)
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
