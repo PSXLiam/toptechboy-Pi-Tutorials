@@ -38,6 +38,10 @@ while True:
     frameGray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(frameGray, 1.3, 5)
     pan.pwm_off()
+    if len(faces) == 0 and panAngle != 0:
+        pan.pwm_on()
+        panAngle = 0
+        pan.set_angle(panAngle)
     for face in faces:
         x, y, w, h = face
         cv2.rectangle(frame, (x,y),(x+w, y+h), (255,0,0), 3)
@@ -57,6 +61,7 @@ while True:
 #         for eye in eyes:
 #             x, y, w, h = eye
 #             cv2.rectangle(roiColor, (x,y),(x+w, y+h), (0,255,0), 3)
+        
     cv2.putText(frame, str(int(fps)) + ' FPS', pos, font, height, myColor, weight)
     cv2.imshow("piCam", frame)
     if cv2.waitKey(1) == ord('q'):
